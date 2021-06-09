@@ -59,6 +59,12 @@ func containerRegistryImageRead(d *schema.ResourceData, meta interface{}) error 
 	}
 	tag, t_ok := d.GetOk("tag")
 	digest, d_ok := d.GetOk("digest")
+	if t_ok && tag != nil && tag != "" && !(d_ok && digest != nill && digest != "") {
+		// Read the digest from GCR.
+		log.Printf("[DEBUG] Reading GCR image digests")
+		// No docker image registry tool for go?
+		
+	} 
 	if t_ok && tag != nil && tag != "" {
 		if err := d.Set("image_url", fmt.Sprintf("%s/%s:%s", url_base, d.Get("name").(string), tag)); err != nil {
 			return fmt.Errorf("Error setting image_url: %s", err)
